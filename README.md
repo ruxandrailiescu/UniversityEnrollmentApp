@@ -1,5 +1,6 @@
 # UniversityEnrollmentApp
 Windows Applications Programming (C#) Course 2024
+
 REQUIREMENTS
 1.	Declare / implement the entities (classes)
 - 0.00	- check the "Designing your classes" section in the document containing the project topics
