@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace UniversityEnrollmentApp.Forms
         #region Form Loading
 
         private ErrorProvider errorProvider;
+        private const string ConnectionString = "Data Source=database.db";
 
         public CandidateForm()
         {
@@ -281,6 +283,26 @@ namespace UniversityEnrollmentApp.Forms
             {
                 SelectNextControl(this.ActiveControl, true, true, true, true);
                 e.Handled = true; // Prevent default handling
+            }
+        }
+
+        #endregion
+
+        #region Database Methods
+
+        private void AddCandidateDB(Candidate candidate)
+        {
+            string query = "INSERT INTO Candidates(FirstName, LastName, BirthDate, Address, ApplicationStatus, FacultyId) " +
+                "VALUES ();" +
+                "SELECT last_insert_rowid()";
+
+            using(SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                int candidateID = (int)command.ExecuteScalar();
+                candidate.CandidateID = candidateID;
             }
         }
 
