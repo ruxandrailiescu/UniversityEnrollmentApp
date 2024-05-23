@@ -11,14 +11,16 @@ namespace UniversityEnrollmentApp.Entities
         public int GradeID { get; set; }
         public string CourseName { get; set; }
         public double CourseGrade { get; set; }
+        public int CandidateID { get; set; }
 
         public Grade () { }
 
-        public Grade(int gradeID, string courseName, double courseGrade) : this()
+        public Grade(int gradeID, string courseName, double courseGrade, int candidateID) : this()
         {
             GradeID = gradeID;
             CourseName = courseName;
             CourseGrade = courseGrade;
+            CandidateID = candidateID;
         }
     }
 }
