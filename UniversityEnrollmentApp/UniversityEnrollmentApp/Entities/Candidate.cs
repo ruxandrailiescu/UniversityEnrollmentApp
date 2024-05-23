@@ -13,24 +13,21 @@ namespace UniversityEnrollmentApp.Entities
         public string CandidateLastName { get; set; }
         public DateTime CandidateBirthDate { get; set; }
         public string CandidateAddress { get; set; }
-        public List<Grade> Grades { get; set; }
         public bool ApplicationStatus {  get; set; }
         public int FacultyID { get; set; }
 
         public Candidate()
         {
-            Grades = new List<Grade>();
             CandidateBirthDate = DateTime.Now;
         }
 
-        public Candidate(int candidateID, string candidateFirstName, string candidateLastName, DateTime candidateBirthDate, string candidateAddress, List<Grade> grades, bool applicationStatus, int facultyID) : this()
+        public Candidate(int candidateID, string candidateFirstName, string candidateLastName, DateTime candidateBirthDate, string candidateAddress, bool applicationStatus, int facultyID) : this()
         {
             CandidateID = candidateID;
             CandidateFirstName = candidateFirstName;
             CandidateLastName = candidateLastName;
             CandidateBirthDate = candidateBirthDate;
             CandidateAddress = candidateAddress;
-            Grades = grades;
             ApplicationStatus = applicationStatus;
             FacultyID = facultyID;
         }

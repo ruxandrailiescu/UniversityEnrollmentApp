@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.nudCandID = new System.Windows.Forms.NumericUpDown();
             this.tbCandFirstName = new System.Windows.Forms.TextBox();
             this.tbCandLastName = new System.Windows.Forms.TextBox();
@@ -189,6 +190,7 @@
             this.btnUpdateCand.TabIndex = 14;
             this.btnUpdateCand.Text = "Update";
             this.btnUpdateCand.UseVisualStyleBackColor = true;
+            this.btnUpdateCand.Click += new System.EventHandler(this.btnUpdateCand_Click);
             // 
             // btnDeleteCand
             // 
@@ -201,6 +203,7 @@
             this.btnDeleteCand.TabIndex = 15;
             this.btnDeleteCand.Text = "Delete";
             this.btnDeleteCand.UseVisualStyleBackColor = true;
+            this.btnDeleteCand.Click += new System.EventHandler(this.btnDeleteCand_Click);
             // 
             // btnClearCand
             // 
@@ -213,9 +216,13 @@
             this.btnClearCand.TabIndex = 16;
             this.btnClearCand.Text = "Clear";
             this.btnClearCand.UseVisualStyleBackColor = true;
+            this.btnClearCand.Click += new System.EventHandler(this.btnClearCand_Click);
             // 
             // dataGridViewCand
             // 
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
+            this.dataGridViewCand.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewCand.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.dataGridViewCand.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewCand.Location = new System.Drawing.Point(421, 56);
             this.dataGridViewCand.Name = "dataGridViewCand";
@@ -246,10 +253,10 @@
             // 
             // tbFacIdFK
             // 
-            this.tbFacIdFK.Location = new System.Drawing.Point(180, 237);
+            this.tbFacIdFK.Location = new System.Drawing.Point(180, 236);
             this.tbFacIdFK.Name = "tbFacIdFK";
             this.tbFacIdFK.Size = new System.Drawing.Size(178, 20);
-            this.tbFacIdFK.TabIndex = 18;
+            this.tbFacIdFK.TabIndex = 20;
             // 
             // CandidateForm
             // 
@@ -257,8 +264,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.ClientSize = new System.Drawing.Size(828, 551);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.tbFacIdFK);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.dataGridViewCand);
             this.Controls.Add(this.btnClearCand);
             this.Controls.Add(this.btnDeleteCand);

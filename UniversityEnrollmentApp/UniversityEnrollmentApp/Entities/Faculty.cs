@@ -11,19 +11,14 @@ namespace UniversityEnrollmentApp.Entities
         public int FacultyID { get; set; }
         public string FacultyName { get; set; }
         public string FacultyAddress { get; set; }
-        public List<Candidate> Candidates { get; set; }
 
-        public Faculty()
-        {   
-            Candidates = new List<Candidate>();
-        }
+        public Faculty() { }
 
-        public Faculty(int facultyID, string facultyName, string facultyAddress, List<Candidate> candidates) : this()
+        public Faculty(int facultyID, string facultyName, string facultyAddress) : this()
         {
             FacultyID = facultyID;
             FacultyName = facultyName;
             FacultyAddress = facultyAddress;
-            Candidates = candidates;
         }
     }
 }

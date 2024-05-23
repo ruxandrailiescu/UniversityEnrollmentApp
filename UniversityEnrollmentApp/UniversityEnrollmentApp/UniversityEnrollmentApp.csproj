@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Candidate.cs" />
+    <Compile Include="Entities\DataSource.cs" />
     <Compile Include="Entities\Faculty.cs" />
     <Compile Include="Entities\Grade.cs" />
     <Compile Include="Forms\CandidateForm.cs">
