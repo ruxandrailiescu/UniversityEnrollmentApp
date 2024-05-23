@@ -36,6 +36,10 @@ namespace UniversityEnrollmentApp.Forms
             tbCandLastName.Validating += new CancelEventHandler(tbCandLastName_Validating);
             tbCandAddress.Validating += new CancelEventHandler(tbCandAddress_Validating);
             tbFacIdFK.Validating += new CancelEventHandler(tbFacIdFK_Validating);
+
+            // Attach KeyDown event
+            this.KeyPreview = true; // Allows the form to receive key events before the focused control
+            this.KeyDown += new KeyEventHandler(Form_KeyDown);
         }
 
         #endregion
@@ -44,7 +48,7 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnSaveCand_Click(object sender, EventArgs e)
         {
-            if(ValidateChildren())
+            if(ValidateForm())
             {
                 int facultyID;
                 if (int.TryParse(tbFacIdFK.Text, out facultyID))
@@ -81,7 +85,7 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnUpdateCand_Click(object sender, EventArgs e)
         {
-            if(ValidateChildren())
+            if(ValidateForm())
             {
                 // Update the selected candidate
                 if (dataGridViewCand.SelectedRows.Count > 0)
@@ -170,12 +174,10 @@ namespace UniversityEnrollmentApp.Forms
         {
             if (string.IsNullOrWhiteSpace(tbCandFirstName.Text))
             {
-                e.Cancel = true;
                 errorProvider.SetError(tbCandFirstName, "First name cannot be empty.");
             }
             else
             {
-                e.Cancel = false;
                 errorProvider.SetError(tbCandFirstName, "");
             }
         }
@@ -184,12 +186,10 @@ namespace UniversityEnrollmentApp.Forms
         {
             if (string.IsNullOrWhiteSpace(tbCandLastName.Text))
             {
-                e.Cancel = true;
                 errorProvider.SetError(tbCandLastName, "Last name cannot be empty.");
             }
             else
             {
-                e.Cancel = false;
                 errorProvider.SetError(tbCandLastName, "");
             }
         }
@@ -198,12 +198,10 @@ namespace UniversityEnrollmentApp.Forms
         {
             if (string.IsNullOrWhiteSpace(tbCandAddress.Text))
             {
-                e.Cancel = true;
                 errorProvider.SetError(tbCandAddress, "Address cannot be empty.");
             }
             else
             {
-                e.Cancel = false;
                 errorProvider.SetError(tbCandAddress, "");
             }
         }
@@ -213,12 +211,76 @@ namespace UniversityEnrollmentApp.Forms
             int facultyID;
             if (!int.TryParse(tbFacIdFK.Text, out facultyID))
             {
-                e.Cancel = true;
                 errorProvider.SetError(tbFacIdFK, "Please enter a valid Faculty ID.");
             }
             else
             {
                 errorProvider.SetError(tbFacIdFK, "");
+            }
+        }
+
+        #endregion
+
+        #region Custom Validation Method
+
+        private bool ValidateForm()
+        {
+            bool isValid = true;
+
+            if (string.IsNullOrWhiteSpace(tbCandFirstName.Text))
+            {
+                errorProvider.SetError(tbCandFirstName, "First name cannot be empty.");
+                isValid = false;
+            }
+            else
+            {
+                errorProvider.SetError(tbCandFirstName, "");
+            }
+
+            if (string.IsNullOrWhiteSpace(tbCandLastName.Text))
+            {
+                errorProvider.SetError(tbCandLastName, "Last name cannot be empty.");
+                isValid = false;
+            }
+            else
+            {
+                errorProvider.SetError(tbCandLastName, "");
+            }
+
+            if (string.IsNullOrWhiteSpace(tbCandAddress.Text))
+            {
+                errorProvider.SetError(tbCandAddress, "Address cannot be empty.");
+                isValid = false;
+            }
+            else
+            {
+                errorProvider.SetError(tbCandAddress, "");
+            }
+
+            int facultyID;
+            if (!int.TryParse(tbFacIdFK.Text, out facultyID))
+            {
+                errorProvider.SetError(tbFacIdFK, "Please enter a valid Faculty ID.");
+                isValid = false;
+            }
+            else
+            {
+                errorProvider.SetError(tbFacIdFK, "");
+            }
+
+            return isValid;
+        }
+
+        #endregion
+
+        #region KeyDown Event
+
+        private void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                SelectNextControl(this.ActiveControl, true, true, true, true);
+                e.Handled = true; // Prevent default handling
             }
         }
 

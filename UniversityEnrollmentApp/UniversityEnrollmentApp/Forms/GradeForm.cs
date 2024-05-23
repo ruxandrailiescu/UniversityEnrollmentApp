@@ -35,6 +35,10 @@ namespace UniversityEnrollmentApp.Forms
             // Attach Validating events
             tbCourseName.Validating += new CancelEventHandler(tbCourseName_Validating);
             tbCandIdFK.Validating += new CancelEventHandler(tbCandIdFK_Validating);
+
+            // Attach KeyDown event
+            this.KeyPreview = true; // Allows the form to receive key events before the focused control
+            this.KeyDown += new KeyEventHandler(Form_KeyDown);
         }
 
         #endregion
@@ -43,7 +47,7 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnSaveCand_Click(object sender, EventArgs e)
         {
-            if(ValidateChildren())
+            if(ValidateForm())
             {
                 int candidateID;
                 if (int.TryParse(tbCandIdFK.Text, out candidateID))
@@ -77,7 +81,7 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnUpdateCand_Click(object sender, EventArgs e)
         {
-            if(ValidateChildren())
+            if(ValidateForm())
             {
                 // Update the selected grade
                 if (dataGridViewGrade.SelectedRows.Count > 0)
@@ -157,12 +161,10 @@ namespace UniversityEnrollmentApp.Forms
         {
             if (string.IsNullOrWhiteSpace(tbCourseName.Text))
             {
-                e.Cancel = true;
                 errorProvider.SetError(tbCourseName, "Course name cannot be empty.");
             }
             else
             {
-                e.Cancel = false;
                 errorProvider.SetError(tbCourseName, "");
             }
         }
@@ -172,12 +174,56 @@ namespace UniversityEnrollmentApp.Forms
             int candidateID;
             if (!int.TryParse(tbCandIdFK.Text, out candidateID))
             {
-                e.Cancel = true;
                 errorProvider.SetError(tbCandIdFK, "Please enter a valid Candidate ID.");
             }
             else
             {
                 errorProvider.SetError(tbCandIdFK, "");
+            }
+        }
+
+        #endregion
+
+        #region Custom Validation Method
+
+        private bool ValidateForm()
+        {
+            bool isValid = true;
+
+            if (string.IsNullOrWhiteSpace(tbCourseName.Text))
+            {
+                errorProvider.SetError(tbCourseName, "Course name cannot be empty.");
+                isValid = false;
+            }
+            else
+            {
+                errorProvider.SetError(tbCourseName, "");
+            }
+
+            int candidateID;
+            if (!int.TryParse(tbCandIdFK.Text, out candidateID))
+            {
+                errorProvider.SetError(tbCandIdFK, "Please enter a valid Candidate ID.");
+                isValid = false;
+            }
+            else
+            {
+                errorProvider.SetError(tbCandIdFK, "");
+            }
+
+            return isValid;
+        }
+
+        #endregion
+
+        #region KeyDown Event
+
+        private void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                SelectNextControl(this.ActiveControl, true, true, true, true);
+                e.Handled = true; // Prevent default handling
             }
         }
 

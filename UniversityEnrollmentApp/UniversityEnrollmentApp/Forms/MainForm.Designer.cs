@@ -32,9 +32,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.sidePanel = new System.Windows.Forms.Panel();
             this.btnDashboard = new System.Windows.Forms.Button();
+            this.btnCandidates = new System.Windows.Forms.Button();
             this.btnGrades = new System.Windows.Forms.Button();
             this.btnFaculties = new System.Windows.Forms.Button();
-            this.btnCandidates = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -82,44 +82,10 @@
             this.btnDashboard.Name = "btnDashboard";
             this.btnDashboard.Size = new System.Drawing.Size(178, 60);
             this.btnDashboard.TabIndex = 5;
-            this.btnDashboard.Text = "  Dashboard";
+            this.btnDashboard.Text = "   Dashboard";
             this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDashboard.UseVisualStyleBackColor = true;
             this.btnDashboard.Click += new System.EventHandler(this.btnDashboard_Click);
-            // 
-            // btnGrades
-            // 
-            this.btnGrades.FlatAppearance.BorderSize = 0;
-            this.btnGrades.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGrades.Font = new System.Drawing.Font("Sitka Small", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGrades.ForeColor = System.Drawing.Color.White;
-            this.btnGrades.Image = ((System.Drawing.Image)(resources.GetObject("btnGrades.Image")));
-            this.btnGrades.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGrades.Location = new System.Drawing.Point(12, 305);
-            this.btnGrades.Name = "btnGrades";
-            this.btnGrades.Size = new System.Drawing.Size(178, 60);
-            this.btnGrades.TabIndex = 4;
-            this.btnGrades.Text = "        Grades";
-            this.btnGrades.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnGrades.UseVisualStyleBackColor = true;
-            this.btnGrades.Click += new System.EventHandler(this.btnGrades_Click);
-            // 
-            // btnFaculties
-            // 
-            this.btnFaculties.FlatAppearance.BorderSize = 0;
-            this.btnFaculties.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFaculties.Font = new System.Drawing.Font("Sitka Small", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFaculties.ForeColor = System.Drawing.Color.White;
-            this.btnFaculties.Image = ((System.Drawing.Image)(resources.GetObject("btnFaculties.Image")));
-            this.btnFaculties.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFaculties.Location = new System.Drawing.Point(12, 173);
-            this.btnFaculties.Name = "btnFaculties";
-            this.btnFaculties.Size = new System.Drawing.Size(178, 60);
-            this.btnFaculties.TabIndex = 3;
-            this.btnFaculties.Text = "     Faculties";
-            this.btnFaculties.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnFaculties.UseVisualStyleBackColor = true;
-            this.btnFaculties.Click += new System.EventHandler(this.btnFaculties_Click);
             // 
             // btnCandidates
             // 
@@ -137,6 +103,40 @@
             this.btnCandidates.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCandidates.UseVisualStyleBackColor = true;
             this.btnCandidates.Click += new System.EventHandler(this.btnCandidates_Click);
+            // 
+            // btnGrades
+            // 
+            this.btnGrades.FlatAppearance.BorderSize = 0;
+            this.btnGrades.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGrades.Font = new System.Drawing.Font("Sitka Small", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGrades.ForeColor = System.Drawing.Color.White;
+            this.btnGrades.Image = ((System.Drawing.Image)(resources.GetObject("btnGrades.Image")));
+            this.btnGrades.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGrades.Location = new System.Drawing.Point(12, 305);
+            this.btnGrades.Name = "btnGrades";
+            this.btnGrades.Size = new System.Drawing.Size(178, 60);
+            this.btnGrades.TabIndex = 4;
+            this.btnGrades.Text = "         Grades";
+            this.btnGrades.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnGrades.UseVisualStyleBackColor = true;
+            this.btnGrades.Click += new System.EventHandler(this.btnGrades_Click);
+            // 
+            // btnFaculties
+            // 
+            this.btnFaculties.FlatAppearance.BorderSize = 0;
+            this.btnFaculties.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFaculties.Font = new System.Drawing.Font("Sitka Small", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFaculties.ForeColor = System.Drawing.Color.White;
+            this.btnFaculties.Image = ((System.Drawing.Image)(resources.GetObject("btnFaculties.Image")));
+            this.btnFaculties.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFaculties.Location = new System.Drawing.Point(12, 173);
+            this.btnFaculties.Name = "btnFaculties";
+            this.btnFaculties.Size = new System.Drawing.Size(178, 60);
+            this.btnFaculties.TabIndex = 3;
+            this.btnFaculties.Text = "      Faculties";
+            this.btnFaculties.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnFaculties.UseVisualStyleBackColor = true;
+            this.btnFaculties.Click += new System.EventHandler(this.btnFaculties_Click);
             // 
             // panel3
             // 

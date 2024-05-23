@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.nudCandID = new System.Windows.Forms.NumericUpDown();
             this.tbCandFirstName = new System.Windows.Forms.TextBox();
             this.tbCandLastName = new System.Windows.Forms.TextBox();
@@ -175,7 +175,7 @@
             this.btnSaveCand.Name = "btnSaveCand";
             this.btnSaveCand.Size = new System.Drawing.Size(75, 36);
             this.btnSaveCand.TabIndex = 13;
-            this.btnSaveCand.Text = "Save";
+            this.btnSaveCand.Text = "&Save";
             this.btnSaveCand.UseVisualStyleBackColor = true;
             this.btnSaveCand.Click += new System.EventHandler(this.btnSaveCand_Click);
             // 
@@ -201,7 +201,7 @@
             this.btnDeleteCand.Name = "btnDeleteCand";
             this.btnDeleteCand.Size = new System.Drawing.Size(75, 36);
             this.btnDeleteCand.TabIndex = 15;
-            this.btnDeleteCand.Text = "Delete";
+            this.btnDeleteCand.Text = "&Delete";
             this.btnDeleteCand.UseVisualStyleBackColor = true;
             this.btnDeleteCand.Click += new System.EventHandler(this.btnDeleteCand_Click);
             // 
@@ -220,8 +220,8 @@
             // 
             // dataGridViewCand
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
-            this.dataGridViewCand.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
+            this.dataGridViewCand.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewCand.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.dataGridViewCand.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewCand.Location = new System.Drawing.Point(421, 56);

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewFaculty = new System.Windows.Forms.DataGridView();
             this.btnClearCand = new System.Windows.Forms.Button();
             this.btnDeleteCand = new System.Windows.Forms.Button();
@@ -46,8 +46,8 @@
             // 
             // dataGridViewFaculty
             // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
-            this.dataGridViewFaculty.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
+            this.dataGridViewFaculty.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewFaculty.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.dataGridViewFaculty.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFaculty.Location = new System.Drawing.Point(421, 56);
@@ -77,7 +77,7 @@
             this.btnDeleteCand.Name = "btnDeleteCand";
             this.btnDeleteCand.Size = new System.Drawing.Size(75, 36);
             this.btnDeleteCand.TabIndex = 33;
-            this.btnDeleteCand.Text = "Delete";
+            this.btnDeleteCand.Text = "&Delete";
             this.btnDeleteCand.UseVisualStyleBackColor = true;
             this.btnDeleteCand.Click += new System.EventHandler(this.btnDeleteCand_Click);
             // 
@@ -104,7 +104,7 @@
             this.btnSaveCand.Name = "btnSaveCand";
             this.btnSaveCand.Size = new System.Drawing.Size(75, 36);
             this.btnSaveCand.TabIndex = 31;
-            this.btnSaveCand.Text = "Save";
+            this.btnSaveCand.Text = "&Save";
             this.btnSaveCand.UseVisualStyleBackColor = true;
             this.btnSaveCand.Click += new System.EventHandler(this.btnSaveCand_Click);
             // 

@@ -33,6 +33,10 @@ namespace UniversityEnrollmentApp.Forms
             // Attach Validating events
             tbFacName.Validating += new CancelEventHandler(tbFacName_Validating);
             tbFacAddress.Validating += new CancelEventHandler(tbFacAddress_Validating);
+
+            // Attach KeyDown event
+            this.KeyPreview = true; // Allows the form to receive key events before the focused control
+            this.KeyDown += new KeyEventHandler(Form_KeyDown);
         }
 
         #endregion
@@ -41,7 +45,7 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnSaveCand_Click(object sender, EventArgs e)
         {
-            if(ValidateChildren())
+            if(ValidateForm())
             {
                 Faculty faculty = new Faculty
                 {
@@ -57,7 +61,7 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnUpdateCand_Click(object sender, EventArgs e)
         {
-            if (ValidateChildren())
+            if (ValidateForm())
             {
                 if (dataGridViewFaculty.SelectedRows.Count > 0)
                 {
@@ -133,12 +137,10 @@ namespace UniversityEnrollmentApp.Forms
         {
             if (string.IsNullOrWhiteSpace(tbFacName.Text))
             {
-                e.Cancel = true;
                 errorProvider.SetError(tbFacName, "Faculty name cannot be empty.");
             }
             else
             {
-                e.Cancel = false;
                 errorProvider.SetError(tbFacName, "");
             }
         }
@@ -147,13 +149,55 @@ namespace UniversityEnrollmentApp.Forms
         {
             if (string.IsNullOrWhiteSpace(tbFacAddress.Text))
             {
-                e.Cancel = true;
                 errorProvider.SetError(tbFacAddress, "Faculty address cannot be empty.");
             }
             else
             {
-                e.Cancel = false;
                 errorProvider.SetError(tbFacAddress, "");
+            }
+        }
+
+        #endregion
+
+        #region Custom Validation Method
+
+        private bool ValidateForm()
+        {
+            bool isValid = true;
+
+            if (string.IsNullOrWhiteSpace(tbFacName.Text))
+            {
+                errorProvider.SetError(tbFacName, "Faculty name cannot be empty.");
+                isValid = false;
+            }
+            else
+            {
+                errorProvider.SetError(tbFacName, "");
+            }
+
+            if (string.IsNullOrWhiteSpace(tbFacAddress.Text))
+            {
+                errorProvider.SetError(tbFacAddress, "Faculty address cannot be empty.");
+                isValid = false;
+            }
+            else
+            {
+                errorProvider.SetError(tbFacAddress, "");
+            }
+
+            return isValid;
+        }
+
+        #endregion
+
+        #region KeyDown Event
+
+        private void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                SelectNextControl(this.ActiveControl, true, true, true, true);
+                e.Handled = true; // Prevent default handling
             }
         }
 
