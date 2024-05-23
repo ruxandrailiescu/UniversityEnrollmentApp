@@ -15,9 +15,12 @@ namespace UniversityEnrollmentApp.Forms
     {
         #region Form Loading
 
+        private ErrorProvider errorProvider;
+
         public FacultyForm()
         {
             InitializeComponent();
+            errorProvider = new ErrorProvider();
 
             // Setup DataGridView for editing
             dataGridViewFaculty.AllowUserToAddRows = false;
@@ -26,6 +29,10 @@ namespace UniversityEnrollmentApp.Forms
             dataGridViewFaculty.ReadOnly = false; // Allow editing
             dataGridViewFaculty.CellEndEdit += DataGridViewFaculty_CellEndEdit; // Handle cell edit end
             RefreshDataGrid();
+
+            // Attach Validating events
+            tbFacName.Validating += new CancelEventHandler(tbFacName_Validating);
+            tbFacAddress.Validating += new CancelEventHandler(tbFacAddress_Validating);
         }
 
         #endregion
@@ -34,27 +41,44 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnSaveCand_Click(object sender, EventArgs e)
         {
-            Faculty faculty = new Faculty
+            if(ValidateChildren())
             {
-                FacultyID = (int)nudFacID.Value,
-                FacultyName = tbFacName.Text,
-                FacultyAddress = tbFacAddress.Text,
-            };
-            DataSource.Faculties.Add(faculty);
-            RefreshDataGrid();
-            ClearInputControls();
+                Faculty faculty = new Faculty
+                {
+                    FacultyID = (int)nudFacID.Value,
+                    FacultyName = tbFacName.Text,
+                    FacultyAddress = tbFacAddress.Text,
+                };
+                DataSource.Faculties.Add(faculty);
+                RefreshDataGrid();
+                ClearInputControls();
+            }
         }
 
         private void btnUpdateCand_Click(object sender, EventArgs e)
         {
-            if (dataGridViewFaculty.SelectedRows.Count > 0)
+            if (ValidateChildren())
             {
-                int index = dataGridViewFaculty.SelectedRows[0].Index;
-                DataSource.Faculties[index].FacultyID = (int)dataGridViewFaculty.Rows[index].Cells[0].Value;
-                DataSource.Faculties[index].FacultyName = dataGridViewFaculty.Rows[index].Cells[1].Value.ToString();
-                DataSource.Faculties[index].FacultyAddress = dataGridViewFaculty.Rows[index].Cells[2].Value.ToString();
-                RefreshDataGrid();
-                ClearInputControls();
+                if (dataGridViewFaculty.SelectedRows.Count > 0)
+                {
+                    int index = dataGridViewFaculty.SelectedRows[0].Index;
+                    if(index >= 0 && index < DataSource.Faculties.Count)
+                    {
+                        DataSource.Faculties[index].FacultyID = (int)dataGridViewFaculty.Rows[index].Cells[0].Value;
+                        DataSource.Faculties[index].FacultyName = dataGridViewFaculty.Rows[index].Cells[1].Value.ToString();
+                        DataSource.Faculties[index].FacultyAddress = dataGridViewFaculty.Rows[index].Cells[2].Value.ToString();
+                        RefreshDataGrid();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid selection. Please select a valid faculty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    ClearInputControls();
+                }
+                else
+                {
+                    MessageBox.Show("Please select a faculty to update.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -98,6 +122,39 @@ namespace UniversityEnrollmentApp.Forms
             nudFacID.Value = 0;
             tbFacName.Clear();
             tbFacAddress.Clear();
+            errorProvider.Clear();
+        }
+
+        #endregion
+
+        #region Validation Events
+
+        private void tbFacName_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(tbFacName.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(tbFacName, "Faculty name cannot be empty.");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider.SetError(tbFacName, "");
+            }
+        }
+
+        private void tbFacAddress_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(tbFacAddress.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(tbFacAddress, "Faculty address cannot be empty.");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider.SetError(tbFacAddress, "");
+            }
         }
 
         #endregion

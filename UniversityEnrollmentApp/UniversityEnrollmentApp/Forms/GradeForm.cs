@@ -16,11 +16,13 @@ namespace UniversityEnrollmentApp.Forms
         #region Form Loading
 
         private BindingList<Grade> Grades;
+        private ErrorProvider errorProvider;
 
         public GradeForm()
         {
             InitializeComponent();
             Grades = new BindingList<Grade>();
+            errorProvider = new ErrorProvider();
 
             // Setup DataGridView for editing
             dataGridViewGrade.AllowUserToAddRows = false;
@@ -29,6 +31,10 @@ namespace UniversityEnrollmentApp.Forms
             dataGridViewGrade.ReadOnly = false; // Allow editing
             dataGridViewGrade.CellEndEdit += DataGridViewGrade_CellEndEdit; // Handle cell edit end
             RefreshDataGrid();
+
+            // Attach Validating events
+            tbCourseName.Validating += new CancelEventHandler(tbCourseName_Validating);
+            tbCandIdFK.Validating += new CancelEventHandler(tbCandIdFK_Validating);
         }
 
         #endregion
@@ -37,58 +43,64 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnSaveCand_Click(object sender, EventArgs e)
         {
-            int candidateID;
-            if (int.TryParse(tbCandIdFK.Text, out candidateID))
+            if(ValidateChildren())
             {
-                Candidate candidate = DataSource.Candidates.FirstOrDefault(c => c.CandidateID == candidateID);
-
-                if (candidate != null)
+                int candidateID;
+                if (int.TryParse(tbCandIdFK.Text, out candidateID))
                 {
-                    Grade grade = new Grade
+                    Candidate candidate = DataSource.Candidates.FirstOrDefault(c => c.CandidateID == candidateID);
+
+                    if (candidate != null)
                     {
-                        GradeID = (int)nudGradeID.Value,
-                        CourseName = tbCourseName.Text,
-                        CourseGrade = (double)nudGrade.Value,
-                        CandidateID = int.Parse(tbCandIdFK.Text),
-                    };
-                    Grades.Add(grade);
-                    RefreshDataGrid();
+                        Grade grade = new Grade
+                        {
+                            GradeID = (int)nudGradeID.Value,
+                            CourseName = tbCourseName.Text,
+                            CourseGrade = (double)nudGrade.Value,
+                            CandidateID = int.Parse(tbCandIdFK.Text),
+                        };
+                        Grades.Add(grade);
+                        RefreshDataGrid();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Candidate not found. Please enter a valid Candidate ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Candidate not found. Please enter a valid Candidate ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Please enter a valid grade to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                ClearInputControls();
             }
-            else
-            {
-                MessageBox.Show("Please enter a valid Candidate ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            ClearInputControls();
         }
 
         private void btnUpdateCand_Click(object sender, EventArgs e)
         {
-            // Update the selected grade
-            if (dataGridViewGrade.SelectedRows.Count > 0)
+            if(ValidateChildren())
             {
-                int index = dataGridViewGrade.SelectedRows[0].Index;
-                if(index >= 0 && index < Grades.Count)
+                // Update the selected grade
+                if (dataGridViewGrade.SelectedRows.Count > 0)
                 {
-                    Grades[index].GradeID = (int)dataGridViewGrade.Rows[index].Cells[0].Value;
-                    Grades[index].CourseName = dataGridViewGrade.Rows[index].Cells[1].Value.ToString();
-                    Grades[index].CourseGrade = (double)dataGridViewGrade.Rows[index].Cells[2].Value;
-                    Grades[index].CandidateID = (int)dataGridViewGrade.Rows[index].Cells[3].Value;
-                    RefreshDataGrid();
+                    int index = dataGridViewGrade.SelectedRows[0].Index;
+                    if (index >= 0 && index < Grades.Count)
+                    {
+                        Grades[index].GradeID = (int)dataGridViewGrade.Rows[index].Cells[0].Value;
+                        Grades[index].CourseName = dataGridViewGrade.Rows[index].Cells[1].Value.ToString();
+                        Grades[index].CourseGrade = (double)dataGridViewGrade.Rows[index].Cells[2].Value;
+                        Grades[index].CandidateID = (int)dataGridViewGrade.Rows[index].Cells[3].Value;
+                        RefreshDataGrid();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid selection. Please select a valid grade.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    ClearInputControls();
                 }
                 else
                 {
-                    MessageBox.Show("Invalid selection. Please select a valid grade.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Please select a grade to update.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                ClearInputControls();
-            }
-            else
-            {
-                MessageBox.Show("Please select a grade to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -134,6 +146,39 @@ namespace UniversityEnrollmentApp.Forms
             tbCourseName.Clear();
             nudGrade.Value = 0;
             tbCandIdFK.Clear();
+            errorProvider.Clear();
+        }
+
+        #endregion
+
+        #region Validation Events
+
+        private void tbCourseName_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(tbCourseName.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(tbCourseName, "Course name cannot be empty.");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider.SetError(tbCourseName, "");
+            }
+        }
+
+        private void tbCandIdFK_Validating(object sender, CancelEventArgs e)
+        {
+            int candidateID;
+            if (!int.TryParse(tbCandIdFK.Text, out candidateID))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(tbCandIdFK, "Please enter a valid Candidate ID.");
+            }
+            else
+            {
+                errorProvider.SetError(tbCandIdFK, "");
+            }
         }
 
         #endregion
