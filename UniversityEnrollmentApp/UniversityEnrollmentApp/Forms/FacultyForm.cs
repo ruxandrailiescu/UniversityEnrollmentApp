@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,6 +18,7 @@ namespace UniversityEnrollmentApp.Forms
         #region Form Loading
 
         private ErrorProvider errorProvider;
+        private const string ConnectionString = "Data Source=database.db";
 
         public FacultyForm()
         {
@@ -49,11 +52,20 @@ namespace UniversityEnrollmentApp.Forms
             {
                 Faculty faculty = new Faculty
                 {
-                    FacultyID = (int)nudFacID.Value,
+                    FacultyID = (long)nudFacID.Value,
                     FacultyName = tbFacName.Text,
                     FacultyAddress = tbFacAddress.Text,
                 };
-                DataSource.Faculties.Add(faculty);
+                try
+                {
+                    AddFacultyDB(faculty);      // save new faculty to the database
+                    MessageBox.Show("Faculty saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
                 RefreshDataGrid();
                 ClearInputControls();
             }
@@ -68,9 +80,21 @@ namespace UniversityEnrollmentApp.Forms
                     int index = dataGridViewFaculty.SelectedRows[0].Index;
                     if(index >= 0 && index < DataSource.Faculties.Count)
                     {
-                        DataSource.Faculties[index].FacultyID = (int)dataGridViewFaculty.Rows[index].Cells[0].Value;
+                        DataSource.Faculties[index].FacultyID = (long)dataGridViewFaculty.Rows[index].Cells[0].Value;
                         DataSource.Faculties[index].FacultyName = dataGridViewFaculty.Rows[index].Cells[1].Value.ToString();
                         DataSource.Faculties[index].FacultyAddress = dataGridViewFaculty.Rows[index].Cells[2].Value.ToString();
+
+                        Faculty faculty = DataSource.Faculties[index];
+                        try
+                        {
+                            UpdateFacultyDB(faculty);   // update faculty in the database
+                            MessageBox.Show("Faculty updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("An error occurred while updating the faculty: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
                         RefreshDataGrid();
                     }
                     else
@@ -88,13 +112,34 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnDeleteCand_Click(object sender, EventArgs e)
         {
-            // Delete the selected faculty
-            if (dataGridViewFaculty.SelectedRows.Count > 0)
+            if (dataGridViewFaculty.SelectedRows.Count == 0)
             {
-                int index = dataGridViewFaculty.SelectedRows[0].Index;
-                DataSource.Faculties.RemoveAt(index);
-                RefreshDataGrid();
-                ClearInputControls();
+                MessageBox.Show("Please select a faculty to delete.", "Delete Faculty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to delete the selected faculty?", "Delete Faculty", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                try
+                {
+                    int index = dataGridViewFaculty.SelectedRows[0].Index;
+                    if (index >= 0 && index < DataSource.Faculties.Count)
+                    {
+                        Faculty faculty = DataSource.Faculties[index];
+                        DeleteFacultyDB(faculty);
+                        RefreshDataGrid();
+                        ClearInputControls();
+                        MessageBox.Show("Faculty deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid selection. Please select a valid faculty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred while deleting the faculty: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -110,11 +155,23 @@ namespace UniversityEnrollmentApp.Forms
             int rowIndex = e.RowIndex;
             if (rowIndex >= 0 && rowIndex < DataSource.Faculties.Count)
             {
-                DataSource.Faculties[rowIndex].FacultyID = (int)dataGridViewFaculty.Rows[rowIndex].Cells[0].Value;
+                // Update the faculty in the local list
+                DataSource.Faculties[rowIndex].FacultyID = (long)dataGridViewFaculty.Rows[rowIndex].Cells[0].Value;
                 DataSource.Faculties[rowIndex].FacultyName = dataGridViewFaculty.Rows[rowIndex].Cells[1].Value.ToString();
                 DataSource.Faculties[rowIndex].FacultyAddress = dataGridViewFaculty.Rows[rowIndex].Cells[2].Value.ToString();
+
+                // Update the input controls with the new values
+                nudFacID.Value = DataSource.Faculties[rowIndex].FacultyID;
+                tbFacName.Text = DataSource.Faculties[rowIndex].FacultyName;
+                tbFacAddress.Text = DataSource.Faculties[rowIndex].FacultyAddress;
             }
         }
+
+        private void toolStripBtnLoad2_Click(object sender, EventArgs e)
+        {
+            LoadFacultiesDB();
+        }
+
         private void RefreshDataGrid()
         {
             dataGridViewFaculty.DataSource = null;
@@ -202,5 +259,101 @@ namespace UniversityEnrollmentApp.Forms
         }
 
         #endregion
+
+        #region Database Methods
+
+        private void AddFacultyDB(Faculty faculty)
+        {
+            string query = "INSERT INTO Faculties(FacultyName, Address) "
+                + "VALUES (@facultyName, @address); "
+                + "SELECT last_insert_rowid()";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                // Add the new faculty to the database
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@facultyName", faculty.FacultyName);
+                command.Parameters.AddWithValue("@address", faculty.FacultyAddress);
+
+                faculty.FacultyID = (long)command.ExecuteScalar();
+
+                // Add the new faculty to the local collection
+                DataSource.Faculties.Add(faculty);
+            }
+        }
+
+        private void LoadFacultiesDB()
+        {
+            const string query = "SELECT * FROM Faculties";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long id = (long)reader["Id"];
+                        string facultyName = (string)reader["FacultyName"];
+                        string address = (string)reader["Address"];
+
+                        Faculty faculty = new Faculty(id, facultyName, address);
+                        DataSource.Faculties.Add(faculty);
+                    }
+                }
+            }
+        }
+
+        private void UpdateFacultyDB(Faculty faculty)
+        {
+            const string query = @"
+                UPDATE Faculties 
+                SET 
+                    FacultyName = @facultyName,
+                    Address = @address   
+                WHERE 
+                    Id = @id";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", faculty.FacultyID);
+                    command.Parameters.AddWithValue("@facultyName", faculty.FacultyName);
+                    command.Parameters.AddWithValue("@address", faculty.FacultyAddress);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void DeleteFacultyDB(Faculty faculty)
+        {
+            const string query = "DELETE FROM Faculties WHERE Id=@id";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                // Remove from the database
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@id", faculty.FacultyID);
+
+                command.ExecuteNonQuery();
+
+                // Remove from local copy
+                DataSource.Faculties.Remove(faculty);
+            }
+        }
+
+        #endregion
+
     }
 }

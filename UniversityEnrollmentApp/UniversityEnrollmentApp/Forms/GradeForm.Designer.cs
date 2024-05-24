@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GradeForm));
             this.dataGridViewGrade = new System.Windows.Forms.DataGridView();
             this.btnClearCand = new System.Windows.Forms.Button();
             this.btnDeleteCand = new System.Windows.Forms.Button();
@@ -42,16 +43,19 @@
             this.nudGrade = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.tbCandIdFK = new System.Windows.Forms.TextBox();
+            this.toolStripCand = new System.Windows.Forms.ToolStrip();
+            this.toolStripBtnLoad1 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGrade)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGradeID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGrade)).BeginInit();
+            this.toolStripCand.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewGrade
             // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewGrade.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewGrade.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewGrade.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.dataGridViewGrade.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewGrade.Location = new System.Drawing.Point(426, 56);
@@ -196,12 +200,36 @@
             this.tbCandIdFK.Size = new System.Drawing.Size(178, 20);
             this.tbCandIdFK.TabIndex = 37;
             // 
+            // toolStripCand
+            // 
+            this.toolStripCand.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripCand.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripBtnLoad1});
+            this.toolStripCand.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.toolStripCand.Location = new System.Drawing.Point(0, 0);
+            this.toolStripCand.Name = "toolStripCand";
+            this.toolStripCand.Size = new System.Drawing.Size(828, 25);
+            this.toolStripCand.TabIndex = 39;
+            this.toolStripCand.Text = "toolStrip1";
+            // 
+            // toolStripBtnLoad1
+            // 
+            this.toolStripBtnLoad1.Font = new System.Drawing.Font("Sitka Small", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripBtnLoad1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripBtnLoad1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnLoad1.Image")));
+            this.toolStripBtnLoad1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnLoad1.Name = "toolStripBtnLoad1";
+            this.toolStripBtnLoad1.Size = new System.Drawing.Size(107, 22);
+            this.toolStripBtnLoad1.Text = "Load Grades";
+            this.toolStripBtnLoad1.Click += new System.EventHandler(this.toolStripBtnLoad1_Click);
+            // 
             // GradeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.ClientSize = new System.Drawing.Size(828, 551);
+            this.Controls.Add(this.toolStripCand);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbCandIdFK);
             this.Controls.Add(this.nudGrade);
@@ -222,6 +250,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGrade)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGradeID)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGrade)).EndInit();
+            this.toolStripCand.ResumeLayout(false);
+            this.toolStripCand.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -242,5 +272,7 @@
         private System.Windows.Forms.NumericUpDown nudGrade;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbCandIdFK;
+        private System.Windows.Forms.ToolStrip toolStripCand;
+        private System.Windows.Forms.ToolStripButton toolStripBtnLoad1;
     }
 }

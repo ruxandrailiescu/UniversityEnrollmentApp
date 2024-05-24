@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FacultyForm));
             this.dataGridViewFaculty = new System.Windows.Forms.DataGridView();
             this.btnClearCand = new System.Windows.Forms.Button();
             this.btnDeleteCand = new System.Windows.Forms.Button();
@@ -40,14 +41,17 @@
             this.tbFacAddress = new System.Windows.Forms.TextBox();
             this.tbFacName = new System.Windows.Forms.TextBox();
             this.nudFacID = new System.Windows.Forms.NumericUpDown();
+            this.toolStripCand = new System.Windows.Forms.ToolStrip();
+            this.toolStripBtnLoad2 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFaculty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFacID)).BeginInit();
+            this.toolStripCand.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewFaculty
             // 
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
-            this.dataGridViewFaculty.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
+            this.dataGridViewFaculty.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewFaculty.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.dataGridViewFaculty.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFaculty.Location = new System.Drawing.Point(421, 56);
@@ -162,12 +166,36 @@
             this.nudFacID.Size = new System.Drawing.Size(178, 20);
             this.nudFacID.TabIndex = 18;
             // 
+            // toolStripCand
+            // 
+            this.toolStripCand.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripCand.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripBtnLoad2});
+            this.toolStripCand.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.toolStripCand.Location = new System.Drawing.Point(0, 0);
+            this.toolStripCand.Name = "toolStripCand";
+            this.toolStripCand.Size = new System.Drawing.Size(828, 25);
+            this.toolStripCand.TabIndex = 40;
+            this.toolStripCand.Text = "toolStrip1";
+            // 
+            // toolStripBtnLoad2
+            // 
+            this.toolStripBtnLoad2.Font = new System.Drawing.Font("Sitka Small", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStripBtnLoad2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.toolStripBtnLoad2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtnLoad2.Image")));
+            this.toolStripBtnLoad2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripBtnLoad2.Name = "toolStripBtnLoad2";
+            this.toolStripBtnLoad2.Size = new System.Drawing.Size(121, 22);
+            this.toolStripBtnLoad2.Text = "Load Faculties";
+            this.toolStripBtnLoad2.Click += new System.EventHandler(this.toolStripBtnLoad2_Click);
+            // 
             // FacultyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.ClientSize = new System.Drawing.Size(828, 551);
+            this.Controls.Add(this.toolStripCand);
             this.Controls.Add(this.dataGridViewFaculty);
             this.Controls.Add(this.btnClearCand);
             this.Controls.Add(this.btnDeleteCand);
@@ -184,6 +212,8 @@
             this.Text = "FacultyForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFaculty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudFacID)).EndInit();
+            this.toolStripCand.ResumeLayout(false);
+            this.toolStripCand.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,5 +232,7 @@
         private System.Windows.Forms.TextBox tbFacAddress;
         private System.Windows.Forms.TextBox tbFacName;
         private System.Windows.Forms.NumericUpDown nudFacID;
+        private System.Windows.Forms.ToolStrip toolStripCand;
+        private System.Windows.Forms.ToolStripButton toolStripBtnLoad2;
     }
 }

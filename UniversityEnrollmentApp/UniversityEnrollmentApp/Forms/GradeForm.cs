@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace UniversityEnrollmentApp.Forms
 
         private BindingList<Grade> Grades;
         private ErrorProvider errorProvider;
+        private const string ConnectionString = "Data Source=database.db";
 
         public GradeForm()
         {
@@ -49,8 +51,8 @@ namespace UniversityEnrollmentApp.Forms
         {
             if(ValidateForm())
             {
-                int candidateID;
-                if (int.TryParse(tbCandIdFK.Text, out candidateID))
+                long candidateID;
+                if (long.TryParse(tbCandIdFK.Text, out candidateID))
                 {
                     Candidate candidate = DataSource.Candidates.FirstOrDefault(c => c.CandidateID == candidateID);
 
@@ -58,12 +60,21 @@ namespace UniversityEnrollmentApp.Forms
                     {
                         Grade grade = new Grade
                         {
-                            GradeID = (int)nudGradeID.Value,
+                            GradeID = (long)nudGradeID.Value,
                             CourseName = tbCourseName.Text,
                             CourseGrade = (double)nudGrade.Value,
-                            CandidateID = int.Parse(tbCandIdFK.Text),
+                            CandidateID = long.Parse(tbCandIdFK.Text),
                         };
-                        Grades.Add(grade);
+                        try
+                        {
+                            AddGradeDB(grade);      // save new grade to the database
+                            MessageBox.Show("Grade saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
                         RefreshDataGrid();
                     }
                     else
@@ -89,10 +100,22 @@ namespace UniversityEnrollmentApp.Forms
                     int index = dataGridViewGrade.SelectedRows[0].Index;
                     if (index >= 0 && index < Grades.Count)
                     {
-                        Grades[index].GradeID = (int)dataGridViewGrade.Rows[index].Cells[0].Value;
+                        Grades[index].GradeID = (long)dataGridViewGrade.Rows[index].Cells[0].Value;
                         Grades[index].CourseName = dataGridViewGrade.Rows[index].Cells[1].Value.ToString();
                         Grades[index].CourseGrade = (double)dataGridViewGrade.Rows[index].Cells[2].Value;
-                        Grades[index].CandidateID = (int)dataGridViewGrade.Rows[index].Cells[3].Value;
+                        Grades[index].CandidateID = (long)dataGridViewGrade.Rows[index].Cells[3].Value;
+
+                        Grade grade = Grades[index];
+                        try
+                        {
+                            UpdateGradeDB(grade);   // update grade in the database
+                            MessageBox.Show("Grade updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("An error occurred while updating the grade: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
                         RefreshDataGrid();
                     }
                     else
@@ -110,13 +133,34 @@ namespace UniversityEnrollmentApp.Forms
 
         private void btnDeleteCand_Click(object sender, EventArgs e)
         {
-            // Delete the selected grade
-            if (dataGridViewGrade.SelectedRows.Count > 0)
+            if (dataGridViewGrade.SelectedRows.Count == 0)
             {
-                int index = dataGridViewGrade.SelectedRows[0].Index;
-                Grades.RemoveAt(index);
-                RefreshDataGrid();
-                ClearInputControls();
+                MessageBox.Show("Please select a grade to delete.", "Delete Grade", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to delete the selected grade?", "Delete Grade", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                try
+                {
+                    int index = dataGridViewGrade.SelectedRows[0].Index;
+                    if (index >= 0 && index < Grades.Count)
+                    {
+                        Grade grade = Grades[index];
+                        DeleteGradeDB(grade);
+                        RefreshDataGrid();
+                        ClearInputControls();
+                        MessageBox.Show("Grade deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid selection. Please select a valid grade.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred while deleting the grade: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -132,11 +176,23 @@ namespace UniversityEnrollmentApp.Forms
             int rowIndex = e.RowIndex;
             if (rowIndex >= 0 && rowIndex < Grades.Count)
             {
-                Grades[rowIndex].GradeID = (int)dataGridViewGrade.Rows[rowIndex].Cells[0].Value;
+                // Update the grade in the local list
+                Grades[rowIndex].GradeID = (long)dataGridViewGrade.Rows[rowIndex].Cells[0].Value;
                 Grades[rowIndex].CourseName = dataGridViewGrade.Rows[rowIndex].Cells[1].Value.ToString();
                 Grades[rowIndex].CourseGrade = (double)dataGridViewGrade.Rows[rowIndex].Cells[2].Value;
-                Grades[rowIndex].CandidateID = (int)dataGridViewGrade.Rows[rowIndex].Cells[3].Value;
+                Grades[rowIndex].CandidateID = (long)dataGridViewGrade.Rows[rowIndex].Cells[3].Value;
+
+                // Update the input controls with the new values
+                nudGradeID.Value = Grades[rowIndex].GradeID;
+                tbCourseName.Text = Grades[rowIndex].CourseName;
+                nudGrade.Value = (decimal)Grades[rowIndex].CourseGrade;
+                tbCandIdFK.Text = Grades[rowIndex].CandidateID.ToString();
             }
+        }
+
+        private void toolStripBtnLoad1_Click(object sender, EventArgs e)
+        {
+            LoadGradesDB();
         }
 
         private void RefreshDataGrid()
@@ -171,8 +227,8 @@ namespace UniversityEnrollmentApp.Forms
 
         private void tbCandIdFK_Validating(object sender, CancelEventArgs e)
         {
-            int candidateID;
-            if (!int.TryParse(tbCandIdFK.Text, out candidateID))
+            long candidateID;
+            if (!long.TryParse(tbCandIdFK.Text, out candidateID))
             {
                 errorProvider.SetError(tbCandIdFK, "Please enter a valid Candidate ID.");
             }
@@ -200,8 +256,8 @@ namespace UniversityEnrollmentApp.Forms
                 errorProvider.SetError(tbCourseName, "");
             }
 
-            int candidateID;
-            if (!int.TryParse(tbCandIdFK.Text, out candidateID))
+            long candidateID;
+            if (!long.TryParse(tbCandIdFK.Text, out candidateID))
             {
                 errorProvider.SetError(tbCandIdFK, "Please enter a valid Candidate ID.");
                 isValid = false;
@@ -224,6 +280,105 @@ namespace UniversityEnrollmentApp.Forms
             {
                 SelectNextControl(this.ActiveControl, true, true, true, true);
                 e.Handled = true; // Prevent default handling
+            }
+        }
+
+        #endregion
+
+        #region Database Methods
+
+        private void AddGradeDB(Grade grade)
+        {
+            string query = "INSERT INTO Grades(CourseName, CourseGrade, CandidateId) "
+                + "VALUES (@courseName, @courseGrade, @candidateId); "
+                + "SELECT last_insert_rowid()";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                // Add the new grade to the database
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@courseName", grade.CourseName);
+                command.Parameters.AddWithValue("@courseGrade", grade.CourseGrade);
+                command.Parameters.AddWithValue("@candidateId", grade.CandidateID);
+
+                grade.GradeID = (long)command.ExecuteScalar();
+
+                // Add the new grade to the local collection
+                Grades.Add(grade);
+            }
+        }
+
+        private void LoadGradesDB()
+        {
+            const string query = "SELECT * FROM Grades";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long id = (long)reader["Id"];
+                        string courseName = (string)reader["CourseName"];
+                        double courseGrade = (double)reader["CourseGrade"];
+                        long candidateId = (long)reader["CandidateId"];
+
+                        Grade grade = new Grade(id, courseName, courseGrade, candidateId);
+                        Grades.Add(grade);
+                    }
+                }
+            }
+        }
+
+        private void UpdateGradeDB(Grade grade)
+        {
+            const string query = @"
+                UPDATE Grades 
+                SET 
+                    CourseName = @courseName,
+                    CourseGrade = @courseGrade,
+                    CandidateId = @candidateId    
+                WHERE 
+                    Id = @id";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", grade.GradeID);
+                    command.Parameters.AddWithValue("@courseName", grade.CourseName);
+                    command.Parameters.AddWithValue("@courseGrade", grade.CourseGrade);
+                    command.Parameters.AddWithValue("@candidateId", grade.CandidateID);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void DeleteGradeDB(Grade grade)
+        {
+            const string query = "DELETE FROM Grades WHERE Id=@id";
+
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                connection.Open();
+
+                // Remove from the database
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@id", grade.GradeID);
+
+                command.ExecuteNonQuery();
+
+                // Remove from local copy
+                Grades.Remove(grade);
             }
         }
 

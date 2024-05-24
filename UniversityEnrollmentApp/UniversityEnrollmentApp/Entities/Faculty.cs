@@ -8,13 +8,13 @@ namespace UniversityEnrollmentApp.Entities
 {
     public class Faculty
     {  
-        public int FacultyID { get; set; }
+        public long FacultyID { get; set; }
         public string FacultyName { get; set; }
         public string FacultyAddress { get; set; }
 
         public Faculty() { }
 
-        public Faculty(int facultyID, string facultyName, string facultyAddress) : this()
+        public Faculty(long facultyID, string facultyName, string facultyAddress) : this()
         {
             FacultyID = facultyID;
             FacultyName = facultyName;

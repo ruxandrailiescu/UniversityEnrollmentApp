@@ -8,14 +8,14 @@ namespace UniversityEnrollmentApp.Entities
 {
     public class Grade
     {
-        public int GradeID { get; set; }
+        public long GradeID { get; set; }
         public string CourseName { get; set; }
         public double CourseGrade { get; set; }
-        public int CandidateID { get; set; }
+        public long CandidateID { get; set; }
 
         public Grade () { }
 
-        public Grade(int gradeID, string courseName, double courseGrade, int candidateID) : this()
+        public Grade(long gradeID, string courseName, double courseGrade, long candidateID) : this()
         {
             GradeID = gradeID;
             CourseName = courseName;
