@@ -41,10 +41,12 @@
             this.btnGitHub = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnLinkedIn = new System.Windows.Forms.Button();
+            this.pbShutdown = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbShutdown)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -161,6 +163,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Indigo;
+            this.panel2.Controls.Add(this.pbShutdown);
             this.panel2.Controls.Add(this.btnGitHub);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.btnLinkedIn);
@@ -213,6 +216,17 @@
             this.btnLinkedIn.UseVisualStyleBackColor = true;
             this.btnLinkedIn.Click += new System.EventHandler(this.btnLinkedIn_Click);
             // 
+            // pbShutdown
+            // 
+            this.pbShutdown.Image = ((System.Drawing.Image)(resources.GetObject("pbShutdown.Image")));
+            this.pbShutdown.Location = new System.Drawing.Point(772, 0);
+            this.pbShutdown.Name = "pbShutdown";
+            this.pbShutdown.Size = new System.Drawing.Size(44, 39);
+            this.pbShutdown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbShutdown.TabIndex = 9;
+            this.pbShutdown.TabStop = false;
+            this.pbShutdown.Click += new System.EventHandler(this.pbShutdown_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -230,6 +244,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbShutdown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -248,5 +263,6 @@
         private System.Windows.Forms.Panel sidePanel;
         private System.Windows.Forms.Button btnGitHub;
         private System.Windows.Forms.Button btnLinkedIn;
+        private System.Windows.Forms.PictureBox pbShutdown;
     }
 }

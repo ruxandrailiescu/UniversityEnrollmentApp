@@ -13,6 +13,8 @@ namespace UniversityEnrollmentApp.Forms
 {
     public partial class MainForm : Form
     {
+        #region Form Loading
+
         private FacultyForm facultyForm;
         private CandidateForm candidateForm;
         private GradeForm gradeForm;
@@ -35,6 +37,10 @@ namespace UniversityEnrollmentApp.Forms
             facultyForm.Dock = DockStyle.Fill;
             facultyForm.BringToFront();
         }
+
+        #endregion
+
+        #region Buttons
 
         private void btnFaculties_Click(object sender, EventArgs e)
         {
@@ -112,5 +118,19 @@ namespace UniversityEnrollmentApp.Forms
                 UseShellExecute = true,
             });
         }
+
+        private void pbShutdown_Click(object sender, EventArgs e)
+        {
+            // Confirm if the user really wants to close the application
+            var result = MessageBox.Show("Are you sure you want to shutdown the application?", "Confirm Shutdown", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // Exit the application
+                Application.Exit();
+            }
+        }
+
+        #endregion
     }
 }
