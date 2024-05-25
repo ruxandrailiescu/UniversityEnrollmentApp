@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChartLibrary;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -374,5 +375,48 @@ namespace UniversityEnrollmentApp.Forms
 
         #endregion
 
+        #region DonutChart
+
+        private List<DonutChartValue> GenerateDonutChartData()
+        {
+            var chartData = new List<DonutChartValue>();
+            var faculties = DataSource.Faculties;
+
+            // Calculate the total number of faculties
+            int totalFaculties = faculties.Count;
+
+            foreach (var faculty in faculties)
+            {
+                var existingValue = chartData.FirstOrDefault(d => d.Label == faculty.FacultyName);
+                if (existingValue != null)
+                {
+                    existingValue.Value += 1; // Increment the count for this faculty
+                }
+                else
+                {
+                    chartData.Add(new DonutChartValue(faculty.FacultyName, 1));
+                }
+            }
+
+            // Calculate the percentage for each faculty
+            foreach (var data in chartData)
+            {
+                data.Value = (data.Value / totalFaculties) * 100;
+            }
+
+            return chartData;
+        }
+
+        // data binding to the DonutChartControl
+        //private void UpdateChart()
+        //{
+        //    if (this.Owner is MainForm mainForm)
+        //    {
+        //        var chartData = GenerateDonutChartData();
+        //        mainForm.DonutChartControl.Data = chartData.ToArray();
+        //    }
+        //}
+
+        #endregion
     }
 }

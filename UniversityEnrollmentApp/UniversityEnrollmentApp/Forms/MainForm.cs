@@ -18,6 +18,7 @@ namespace UniversityEnrollmentApp.Forms
         private FacultyForm facultyForm;
         private CandidateForm candidateForm;
         private GradeForm gradeForm;
+        private DashboardForm dashboardForm;
 
         public MainForm()
         {
@@ -97,6 +98,17 @@ namespace UniversityEnrollmentApp.Forms
         {
             sidePanel.Height = btnDashboard.Height;
             sidePanel.Top = btnDashboard.Top;
+            if (dashboardForm == null || dashboardForm.IsDisposed)
+            {
+                dashboardForm = new DashboardForm();
+                dashboardForm.MdiParent = this;
+                dashboardForm.FormClosed += (s, args) => dashboardForm = null; // Handle form closed event
+                dashboardForm.Show();
+            }
+            dashboardForm.TopLevel = false;
+            dashboardForm.FormBorderStyle = FormBorderStyle.None;
+            dashboardForm.Dock = DockStyle.Fill;
+            dashboardForm.BringToFront();
         }
 
         private void btnLinkedIn_Click(object sender, EventArgs e)

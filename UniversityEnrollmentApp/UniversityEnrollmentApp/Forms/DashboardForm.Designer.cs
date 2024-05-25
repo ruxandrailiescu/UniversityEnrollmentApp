@@ -33,9 +33,9 @@
             // 
             // donutChartControl1
             // 
-            this.donutChartControl1.Location = new System.Drawing.Point(422, 99);
+            this.donutChartControl1.Location = new System.Drawing.Point(206, 69);
             this.donutChartControl1.Name = "donutChartControl1";
-            this.donutChartControl1.Size = new System.Drawing.Size(378, 358);
+            this.donutChartControl1.Size = new System.Drawing.Size(557, 394);
             this.donutChartControl1.TabIndex = 0;
             this.donutChartControl1.Text = "donutChartControl1";
             // 
@@ -49,6 +49,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "DashboardForm";
             this.Text = "DashboardForm";
+            this.Load += new System.EventHandler(this.DashboardForm_Load);
             this.ResumeLayout(false);
 
         }
