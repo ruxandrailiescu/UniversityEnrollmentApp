@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UniversityEnrollmentApp.Entities;
+using UniversityEnrollmentApp.ViewModel;
 
 namespace UniversityEnrollmentApp.Forms
 {
@@ -17,12 +18,14 @@ namespace UniversityEnrollmentApp.Forms
     {
         #region Form Loading
 
+        private readonly CandidateFormViewModel viewModel;
         private ErrorProvider errorProvider;
         private const string ConnectionString = "Data Source=database.db";
 
         public CandidateForm()
         {
             InitializeComponent();
+            viewModel = new CandidateFormViewModel();
             errorProvider = new ErrorProvider();
 
             // Setup DataGridView for editing
@@ -42,6 +45,22 @@ namespace UniversityEnrollmentApp.Forms
             // Attach KeyDown event
             this.KeyPreview = true; // Allows the form to receive key events before the focused control
             this.KeyDown += new KeyEventHandler(Form_KeyDown);
+
+            // Attach Load event
+            //this.Load += CandidateForm_Load;
+        }
+
+        private void CandidateForm_Load(object sender, EventArgs e)
+        {
+            dataGridViewCand.DataSource = viewModel.Candidates;
+
+            nudCandID.DataBindings.Add("Value", viewModel, nameof(CandidateFormViewModel.CandidateID));
+            tbCandFirstName.DataBindings.Add("Text", viewModel, nameof(CandidateFormViewModel.CandidateFirstName));
+            tbCandLastName.DataBindings.Add("Text", viewModel, nameof(CandidateFormViewModel.CandidateLastName));
+            dtpCandBirthDate.DataBindings.Add("Value", viewModel, nameof(CandidateFormViewModel.CandidateBirthDate));
+            tbCandAddress.DataBindings.Add("Text", viewModel, nameof(CandidateFormViewModel.CandidateAddress));
+            checkBoxAccepted.DataBindings.Add("Checked", viewModel, nameof(CandidateFormViewModel.ApplicationStatus));
+            tbFacIdFK.DataBindings.Add("Text", viewModel, nameof(CandidateFormViewModel.FacultyID));
         }
 
         #endregion
@@ -207,13 +226,16 @@ namespace UniversityEnrollmentApp.Forms
         private void toolStripBtnLoad_Click(object sender, EventArgs e)
         {
             LoadCandidatesDB();
+            UpdateStatusLabel();
         }
 
         private void RefreshDataGrid()
         {
             dataGridViewCand.DataSource = null;
             dataGridViewCand.DataSource = DataSource.Candidates;
+            UpdateStatusLabel();
         }
+
         private void ClearInputControls()
         {
             nudCandID.Value = 0;
@@ -224,6 +246,21 @@ namespace UniversityEnrollmentApp.Forms
             tbFacIdFK.Clear();
             checkBoxAccepted.Checked = false;
             errorProvider.Clear();
+        }
+
+        #endregion
+
+        #region ToolStrip
+
+        private void UpdateStatusLabel()
+        {
+            int rowCount = dataGridViewCand.Rows.Count;
+            // Subtract 1 if the last row is the 'new row' (if AllowUserToAddRows is true)
+            if (dataGridViewCand.AllowUserToAddRows)
+            {
+                rowCount--;
+            }
+            toolStripLabel1.Text = $"Entries Count: {rowCount}";
         }
 
         #endregion

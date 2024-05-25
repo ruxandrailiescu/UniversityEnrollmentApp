@@ -172,12 +172,14 @@ namespace UniversityEnrollmentApp.Forms
         private void toolStripBtnLoad2_Click(object sender, EventArgs e)
         {
             LoadFacultiesDB();
+            UpdateStatusLabel();
         }
 
         private void RefreshDataGrid()
         {
             dataGridViewFaculty.DataSource = null;
             dataGridViewFaculty.DataSource = DataSource.Faculties;
+            UpdateStatusLabel();
         }
 
         private void ClearInputControls()
@@ -186,6 +188,21 @@ namespace UniversityEnrollmentApp.Forms
             tbFacName.Clear();
             tbFacAddress.Clear();
             errorProvider.Clear();
+        }
+
+        #endregion
+
+        #region ToolStrip
+
+        private void UpdateStatusLabel()
+        {
+            int rowCount = dataGridViewFaculty.Rows.Count;
+            // Subtract 1 if the last row is the 'new row' (if AllowUserToAddRows is true)
+            if (dataGridViewFaculty.AllowUserToAddRows)
+            {
+                rowCount--;
+            }
+            toolStripLabel1.Text = $"Entries Count: {rowCount}";
         }
 
         #endregion

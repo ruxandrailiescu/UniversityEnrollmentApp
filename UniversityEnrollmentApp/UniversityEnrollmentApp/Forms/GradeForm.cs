@@ -76,7 +76,6 @@ namespace UniversityEnrollmentApp.Forms
                         {
                             MessageBox.Show(ex.Message);
                         }
-
                         RefreshDataGrid();
                     }
                     else
@@ -117,7 +116,6 @@ namespace UniversityEnrollmentApp.Forms
                         {
                             MessageBox.Show("An error occurred while updating the grade: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-
                         RefreshDataGrid();
                     }
                     else
@@ -195,6 +193,7 @@ namespace UniversityEnrollmentApp.Forms
         private void toolStripBtnLoad1_Click(object sender, EventArgs e)
         {
             LoadGradesDB();
+            UpdateStatusLabel();
         }
 
         private void btnSerializeGrades_Click(object sender, EventArgs e)
@@ -253,6 +252,7 @@ namespace UniversityEnrollmentApp.Forms
         {
             dataGridViewGrade.DataSource = null;
             dataGridViewGrade.DataSource = Grades;
+            UpdateStatusLabel();
         }
         private void ClearInputControls()
         {
@@ -261,6 +261,21 @@ namespace UniversityEnrollmentApp.Forms
             nudGrade.Value = 0;
             tbCandIdFK.Clear();
             errorProvider.Clear();
+        }
+
+        #endregion
+
+        #region ToolStrip
+
+        private void UpdateStatusLabel()
+        {
+            int rowCount = dataGridViewGrade.Rows.Count;
+            // Subtract 1 if the last row is the 'new row' (if AllowUserToAddRows is true)
+            if (dataGridViewGrade.AllowUserToAddRows)
+            {
+                rowCount--;
+            }
+            toolStripLabel1.Text = $"Entries Count: {rowCount}";
         }
 
         #endregion

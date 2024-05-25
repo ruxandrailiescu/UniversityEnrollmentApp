@@ -52,9 +52,12 @@
             this.tbFacIdFK = new System.Windows.Forms.TextBox();
             this.toolStripCand = new System.Windows.Forms.ToolStrip();
             this.toolStripBtnLoad = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.nudCandID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCand)).BeginInit();
             this.toolStripCand.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // nudCandID
@@ -285,12 +288,32 @@
             this.toolStripBtnLoad.Text = "Load Candidates";
             this.toolStripBtnLoad.Click += new System.EventHandler(this.toolStripBtnLoad_Click);
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip1.Font = new System.Drawing.Font("Sitka Small", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 526);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(828, 25);
+            this.toolStrip1.TabIndex = 22;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(100, 22);
+            this.toolStripLabel1.Text = "toolStripLabel1";
+            // 
             // CandidateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.ClientSize = new System.Drawing.Size(828, 551);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripCand);
             this.Controls.Add(this.tbFacIdFK);
             this.Controls.Add(this.label7);
@@ -319,6 +342,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCand)).EndInit();
             this.toolStripCand.ResumeLayout(false);
             this.toolStripCand.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,5 +373,7 @@
         private System.Windows.Forms.TextBox tbFacIdFK;
         private System.Windows.Forms.ToolStrip toolStripCand;
         private System.Windows.Forms.ToolStripButton toolStripBtnLoad;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }

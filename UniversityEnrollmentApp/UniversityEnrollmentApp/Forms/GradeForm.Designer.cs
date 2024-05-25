@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GradeForm));
             this.dataGridViewGrade = new System.Windows.Forms.DataGridView();
             this.btnClearCand = new System.Windows.Forms.Button();
@@ -54,18 +54,21 @@
             this.btnExport = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExportGrades = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGrade)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGradeID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGrade)).BeginInit();
             this.toolStripCand.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewGrade
             // 
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewGrade.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewGrade.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewGrade.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.dataGridViewGrade.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewGrade.Location = new System.Drawing.Point(426, 56);
@@ -260,13 +263,13 @@
             this.btnSerializeBinary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnSerializeGrades});
             this.btnSerializeBinary.Name = "btnSerializeBinary";
-            this.btnSerializeBinary.Size = new System.Drawing.Size(180, 22);
+            this.btnSerializeBinary.Size = new System.Drawing.Size(143, 22);
             this.btnSerializeBinary.Text = "Serialize";
             // 
             // btnSerializeGrades
             // 
             this.btnSerializeGrades.Name = "btnSerializeGrades";
-            this.btnSerializeGrades.Size = new System.Drawing.Size(180, 22);
+            this.btnSerializeGrades.Size = new System.Drawing.Size(140, 22);
             this.btnSerializeGrades.Text = "Transcript";
             this.btnSerializeGrades.Click += new System.EventHandler(this.btnSerializeGrades_Click);
             // 
@@ -275,13 +278,13 @@
             this.btnDeserializeBinary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnDeserializeGrades});
             this.btnDeserializeBinary.Name = "btnDeserializeBinary";
-            this.btnDeserializeBinary.Size = new System.Drawing.Size(180, 22);
+            this.btnDeserializeBinary.Size = new System.Drawing.Size(143, 22);
             this.btnDeserializeBinary.Text = "Deserialize";
             // 
             // btnDeserializeGrades
             // 
             this.btnDeserializeGrades.Name = "btnDeserializeGrades";
-            this.btnDeserializeGrades.Size = new System.Drawing.Size(180, 22);
+            this.btnDeserializeGrades.Size = new System.Drawing.Size(140, 22);
             this.btnDeserializeGrades.Text = "Transcript";
             this.btnDeserializeGrades.Click += new System.EventHandler(this.btnDeserializeGrades_Click);
             // 
@@ -290,13 +293,13 @@
             this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnExportGrades});
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(180, 22);
+            this.btnExport.Size = new System.Drawing.Size(143, 22);
             this.btnExport.Text = "Export";
             // 
             // btnExportGrades
             // 
             this.btnExportGrades.Name = "btnExportGrades";
-            this.btnExportGrades.Size = new System.Drawing.Size(180, 22);
+            this.btnExportGrades.Size = new System.Drawing.Size(140, 22);
             this.btnExportGrades.Text = "Transcript";
             this.btnExportGrades.Click += new System.EventHandler(this.btnExportGrades_Click);
             // 
@@ -307,12 +310,32 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(49, 22);
             this.helpToolStripMenuItem.Text = "Help";
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip1.Font = new System.Drawing.Font("Sitka Small", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 526);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(920, 25);
+            this.toolStrip1.TabIndex = 43;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(100, 22);
+            this.toolStripLabel1.Text = "toolStripLabel1";
+            // 
             // GradeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.ClientSize = new System.Drawing.Size(920, 551);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.toolStripCand);
             this.Controls.Add(this.label3);
@@ -339,6 +362,8 @@
             this.toolStripCand.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -370,5 +395,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnExport;
         private System.Windows.Forms.ToolStripMenuItem btnExportGrades;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
     }
 }

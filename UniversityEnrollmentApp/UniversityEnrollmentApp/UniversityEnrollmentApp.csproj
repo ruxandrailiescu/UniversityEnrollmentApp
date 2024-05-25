@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CandidateFormViewModel.cs" />
     <EmbeddedResource Include="Forms\CandidateForm.resx">
       <DependentUpon>CandidateForm.cs</DependentUpon>
     </EmbeddedResource>
