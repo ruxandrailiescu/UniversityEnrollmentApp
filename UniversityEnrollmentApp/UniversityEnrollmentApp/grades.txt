@@ -1,0 +1,5 @@
+CourseName,CourseGrade,CandidateId
+"poo", "10", "1"
+"algebra", "10", "2"
+"analiza", "8", "3"
+"paw", "10", "1"

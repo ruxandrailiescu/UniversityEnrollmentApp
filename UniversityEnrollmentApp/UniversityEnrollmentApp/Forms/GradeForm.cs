@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -195,6 +197,58 @@ namespace UniversityEnrollmentApp.Forms
             LoadGradesDB();
         }
 
+        private void btnSerializeGrades_Click(object sender, EventArgs e)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            try
+            {
+                using (FileStream stream = File.Create("transcripts.bin"))
+                    formatter.Serialize(stream, Grades);
+                MessageBox.Show("Grades serialized successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while serializing the grades: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDeserializeGrades_Click(object sender, EventArgs e)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream stream = File.OpenRead("transcripts.bin"))
+            {
+                Grades = (BindingList<Grade>)formatter.Deserialize(stream);
+                RefreshDataGrid();
+            }
+        }
+
+        private void btnExportGrades_Click(object sender, EventArgs e)
+        {
+            // Create an instance of the open file dialog box.
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text File | *.txt";
+            saveFileDialog.Title = "Save as text file";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // When compiled, this code in this approach is converted to: try{} finally{}
+                using (StreamWriter sw = File.CreateText(saveFileDialog.FileName))
+                // Equivalent to:
+                // using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
+                {
+                    sw.WriteLine("CourseName,CourseGrade,CandidateId");
+
+                    foreach (var grade in Grades)
+                    {
+                        sw.WriteLine("\"{0}\", \"{1}\", \"{2}\""
+                                    , grade.CourseName.Replace("\"", "\"\"")
+                                    , grade.CourseGrade.ToString()
+                                    , grade.CandidateID.ToString());
+                    }
+                }
+            }
+        }
+
         private void RefreshDataGrid()
         {
             dataGridViewGrade.DataSource = null;
@@ -383,5 +437,6 @@ namespace UniversityEnrollmentApp.Forms
         }
 
         #endregion
+
     }
 }

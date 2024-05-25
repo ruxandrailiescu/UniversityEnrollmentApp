@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GradeForm));
             this.dataGridViewGrade = new System.Windows.Forms.DataGridView();
             this.btnClearCand = new System.Windows.Forms.Button();
@@ -45,17 +45,27 @@
             this.tbCandIdFK = new System.Windows.Forms.TextBox();
             this.toolStripCand = new System.Windows.Forms.ToolStrip();
             this.toolStripBtnLoad1 = new System.Windows.Forms.ToolStripButton();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSerializeBinary = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSerializeGrades = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDeserializeBinary = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDeserializeGrades = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExportGrades = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewGrade)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGradeID)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudGrade)).BeginInit();
             this.toolStripCand.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewGrade
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewGrade.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewGrade.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewGrade.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
             this.dataGridViewGrade.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewGrade.Location = new System.Drawing.Point(426, 56);
@@ -208,7 +218,7 @@
             this.toolStripCand.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStripCand.Location = new System.Drawing.Point(0, 0);
             this.toolStripCand.Name = "toolStripCand";
-            this.toolStripCand.Size = new System.Drawing.Size(828, 25);
+            this.toolStripCand.Size = new System.Drawing.Size(920, 25);
             this.toolStripCand.TabIndex = 39;
             this.toolStripCand.Text = "toolStrip1";
             // 
@@ -223,12 +233,87 @@
             this.toolStripBtnLoad1.Text = "Load Grades";
             this.toolStripBtnLoad1.Click += new System.EventHandler(this.toolStripBtnLoad1_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 25);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(920, 26);
+            this.menuStrip1.TabIndex = 42;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSerializeBinary,
+            this.btnDeserializeBinary,
+            this.btnExport});
+            this.fileToolStripMenuItem.Font = new System.Drawing.Font("Sitka Small", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(42, 22);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // btnSerializeBinary
+            // 
+            this.btnSerializeBinary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSerializeGrades});
+            this.btnSerializeBinary.Name = "btnSerializeBinary";
+            this.btnSerializeBinary.Size = new System.Drawing.Size(180, 22);
+            this.btnSerializeBinary.Text = "Serialize";
+            // 
+            // btnSerializeGrades
+            // 
+            this.btnSerializeGrades.Name = "btnSerializeGrades";
+            this.btnSerializeGrades.Size = new System.Drawing.Size(180, 22);
+            this.btnSerializeGrades.Text = "Transcript";
+            this.btnSerializeGrades.Click += new System.EventHandler(this.btnSerializeGrades_Click);
+            // 
+            // btnDeserializeBinary
+            // 
+            this.btnDeserializeBinary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnDeserializeGrades});
+            this.btnDeserializeBinary.Name = "btnDeserializeBinary";
+            this.btnDeserializeBinary.Size = new System.Drawing.Size(180, 22);
+            this.btnDeserializeBinary.Text = "Deserialize";
+            // 
+            // btnDeserializeGrades
+            // 
+            this.btnDeserializeGrades.Name = "btnDeserializeGrades";
+            this.btnDeserializeGrades.Size = new System.Drawing.Size(180, 22);
+            this.btnDeserializeGrades.Text = "Transcript";
+            this.btnDeserializeGrades.Click += new System.EventHandler(this.btnDeserializeGrades_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnExportGrades});
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(180, 22);
+            this.btnExport.Text = "Export";
+            // 
+            // btnExportGrades
+            // 
+            this.btnExportGrades.Name = "btnExportGrades";
+            this.btnExportGrades.Size = new System.Drawing.Size(180, 22);
+            this.btnExportGrades.Text = "Transcript";
+            this.btnExportGrades.Click += new System.EventHandler(this.btnExportGrades_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Font = new System.Drawing.Font("Sitka Small", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(49, 22);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
             // GradeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
-            this.ClientSize = new System.Drawing.Size(828, 551);
+            this.ClientSize = new System.Drawing.Size(920, 551);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.toolStripCand);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbCandIdFK);
@@ -252,6 +337,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudGrade)).EndInit();
             this.toolStripCand.ResumeLayout(false);
             this.toolStripCand.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,5 +361,14 @@
         private System.Windows.Forms.TextBox tbCandIdFK;
         private System.Windows.Forms.ToolStrip toolStripCand;
         private System.Windows.Forms.ToolStripButton toolStripBtnLoad1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnSerializeBinary;
+        private System.Windows.Forms.ToolStripMenuItem btnSerializeGrades;
+        private System.Windows.Forms.ToolStripMenuItem btnDeserializeBinary;
+        private System.Windows.Forms.ToolStripMenuItem btnDeserializeGrades;
+        private System.Windows.Forms.ToolStripMenuItem btnExport;
+        private System.Windows.Forms.ToolStripMenuItem btnExportGrades;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }

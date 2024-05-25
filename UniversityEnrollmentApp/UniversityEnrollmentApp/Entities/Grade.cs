@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniversityEnrollmentApp.Entities
 {
+    [Serializable]
     public class Grade
     {
         public long GradeID { get; set; }
