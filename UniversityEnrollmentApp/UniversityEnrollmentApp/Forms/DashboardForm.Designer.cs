@@ -28,12 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.donutChartControl1 = new ChartLibrary.DonutChartControl();
+            this.SuspendLayout();
+            // 
+            // donutChartControl1
+            // 
+            this.donutChartControl1.Location = new System.Drawing.Point(422, 99);
+            this.donutChartControl1.Name = "donutChartControl1";
+            this.donutChartControl1.Size = new System.Drawing.Size(378, 358);
+            this.donutChartControl1.TabIndex = 0;
+            this.donutChartControl1.Text = "donutChartControl1";
+            // 
+            // DashboardForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(226)))), ((int)(((byte)(254)))));
+            this.ClientSize = new System.Drawing.Size(828, 551);
+            this.Controls.Add(this.donutChartControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "DashboardForm";
             this.Text = "DashboardForm";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private ChartLibrary.DonutChartControl donutChartControl1;
     }
 }
