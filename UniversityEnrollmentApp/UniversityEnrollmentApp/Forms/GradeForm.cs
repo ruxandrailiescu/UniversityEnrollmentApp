@@ -341,7 +341,7 @@ namespace UniversityEnrollmentApp.Forms
 
         #endregion
 
-        #region KeyDown Event
+        #region KeyDown Event & Alt Shortcuts
 
         private void Form_KeyDown(object sender, KeyEventArgs e)
         {
@@ -349,6 +349,30 @@ namespace UniversityEnrollmentApp.Forms
             {
                 SelectNextControl(this.ActiveControl, true, true, true, true);
                 e.Handled = true; // Prevent default handling
+            }
+
+            if (e.Alt && e.KeyCode == Keys.S)
+            {
+                btnSaveCand_Click(sender, e);
+                return;
+            }
+
+            if (e.Alt && e.KeyCode == Keys.U)
+            {
+                btnUpdateCand_Click(sender, e);
+                return;
+            }
+
+            if (e.Alt && e.KeyCode == Keys.D)
+            {
+                btnDeleteCand_Click(sender, e);
+                return;
+            }
+
+            if (e.Alt && e.KeyCode == Keys.C)
+            {
+                btnClearCand_Click(sender, e);
+                return;
             }
         }
 

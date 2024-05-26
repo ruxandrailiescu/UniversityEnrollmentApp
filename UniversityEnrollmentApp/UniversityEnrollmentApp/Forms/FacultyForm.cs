@@ -174,6 +174,7 @@ namespace UniversityEnrollmentApp.Forms
         {
             LoadFacultiesDB();
             UpdateStatusLabel();
+            UpdateChart();
         }
 
         private void RefreshDataGrid()
@@ -181,6 +182,7 @@ namespace UniversityEnrollmentApp.Forms
             dataGridViewFaculty.DataSource = null;
             dataGridViewFaculty.DataSource = DataSource.Faculties;
             UpdateStatusLabel();
+            UpdateChart();
         }
 
         private void ClearInputControls()
@@ -267,7 +269,7 @@ namespace UniversityEnrollmentApp.Forms
 
         #endregion
 
-        #region KeyDown Event
+        #region KeyDown Event & Alt Shortcuts
 
         private void Form_KeyDown(object sender, KeyEventArgs e)
         {
@@ -275,6 +277,30 @@ namespace UniversityEnrollmentApp.Forms
             {
                 SelectNextControl(this.ActiveControl, true, true, true, true);
                 e.Handled = true; // Prevent default handling
+            }
+
+            if (e.Alt && e.KeyCode == Keys.S)
+            {
+                btnSaveCand_Click(sender, e);
+                return;
+            }
+
+            if (e.Alt && e.KeyCode == Keys.U)
+            {
+                btnUpdateCand_Click(sender, e); 
+                return;
+            }
+
+            if (e.Alt && e.KeyCode == Keys.D)
+            {
+                btnDeleteCand_Click(sender, e);
+                return;
+            }
+
+            if (e.Alt && e.KeyCode == Keys.C)
+            {
+                btnClearCand_Click(sender, e);
+                return;
             }
         }
 
@@ -382,8 +408,8 @@ namespace UniversityEnrollmentApp.Forms
             var chartData = new List<DonutChartValue>();
             var faculties = DataSource.Faculties;
 
-            // Calculate the total number of faculties
             int totalFaculties = faculties.Count;
+            if (totalFaculties == 0) return chartData; // Avoid division by zero
 
             foreach (var faculty in faculties)
             {
@@ -407,15 +433,17 @@ namespace UniversityEnrollmentApp.Forms
             return chartData;
         }
 
+
         // data binding to the DonutChartControl
-        //private void UpdateChart()
-        //{
-        //    if (this.Owner is MainForm mainForm)
-        //    {
-        //        var chartData = GenerateDonutChartData();
-        //        mainForm.DonutChartControl.Data = chartData.ToArray();
-        //    }
-        //}
+        private void UpdateChart()
+        {
+            if (this.Owner is DashboardForm dashboardForm)
+            {
+                var chartData = GenerateDonutChartData();
+                dashboardForm.donutChartControl1.Data = chartData.ToArray();
+                dashboardForm.donutChartControl1.Invalidate(); // Force the control to redraw with the new data
+            }
+        }
 
         #endregion
     }

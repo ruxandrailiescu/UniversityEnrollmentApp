@@ -56,6 +56,6 @@
 
         #endregion
 
-        private ChartLibrary.DonutChartControl donutChartControl1;
+        public ChartLibrary.DonutChartControl donutChartControl1;
     }
 }
