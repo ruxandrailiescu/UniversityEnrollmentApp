@@ -230,13 +230,6 @@ namespace UniversityEnrollmentApp.Forms
             }
         }
 
-        private void toolStripBtnLoad_Click(object sender, EventArgs e)
-        {
-            LoadCandidatesDB();
-            UpdateStatusLabel();
-            OnDataChanged();
-        }
-
         private void RefreshDataGrid()
         {
             dataGridViewCand.DataSource = null;
@@ -259,7 +252,15 @@ namespace UniversityEnrollmentApp.Forms
         #endregion
 
         #region ToolStrip
+        private void toolStripBtnLoad_Click(object sender, EventArgs e)
+        {
+            LoadCandidatesDB();
+            UpdateStatusLabel();
+            OnDataChanged();
+        }
+        #endregion
 
+        #region StatusStrip
         private void UpdateStatusLabel()
         {
             int rowCount = dataGridViewCand.Rows.Count;
@@ -270,7 +271,6 @@ namespace UniversityEnrollmentApp.Forms
             }
             toolStripLabel1.Text = $"Entries Count: {rowCount}";
         }
-
         #endregion
 
         #region Validation Events

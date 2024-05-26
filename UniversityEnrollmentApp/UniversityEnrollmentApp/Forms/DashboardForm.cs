@@ -14,6 +14,7 @@ namespace UniversityEnrollmentApp.Forms
 {
     public partial class DashboardForm : Form
     {
+        #region Form Loading
         public DonutChartControl donutChartControl2 {  get; set; }
         private FacultyForm facultyForm;
         private CandidateForm candidateForm;
@@ -37,7 +38,9 @@ namespace UniversityEnrollmentApp.Forms
 
             UpdateChart(); // Initial chart update with existing data
         }
+        #endregion
 
+        #region DataBinding - Display Chart
         private void DataForm_DataChanged(object sender, EventArgs e)
         {
             UpdateChart();
@@ -74,5 +77,6 @@ namespace UniversityEnrollmentApp.Forms
             donutChartControl2.Data = chartData.ToArray();
             donutChartControl2.Invalidate();
         }
+        #endregion
     }
 }
