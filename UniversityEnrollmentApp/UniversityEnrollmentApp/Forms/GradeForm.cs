@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -43,6 +44,8 @@ namespace UniversityEnrollmentApp.Forms
             // Attach KeyDown event
             this.KeyPreview = true; // Allows the form to receive key events before the focused control
             this.KeyDown += new KeyEventHandler(Form_KeyDown);
+
+            printDocument.PrintPage += new PrintPageEventHandler(PrintDocument_PrintPage);
         }
 
         #endregion
@@ -277,6 +280,56 @@ namespace UniversityEnrollmentApp.Forms
             }
             toolStripLabel1.Text = $"Entries Count: {rowCount}";
         }
+
+        #region Printing
+        private void printToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                printPreviewDialog.ShowDialog();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("An error occurred while trying to load the document for Print Preview. Make sure you currently have access to a printer. A printer must be connected and accessible for Print Preview to work.");
+            }
+        }
+
+        private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            // Set up fonts and positions
+            Font font = new Font("Arial", 12);
+            float fontHeight = font.GetHeight();
+            int startX = 10;
+            int startY = 10;
+            int offsetY = 0;
+
+            // Print the header
+            e.Graphics.DrawString("Grade Report", new Font("Arial", 18, FontStyle.Bold), Brushes.Black, startX, startY + offsetY);
+            offsetY += (int)fontHeight + 20;
+
+            // Print column headers
+            foreach (DataGridViewColumn column in dataGridViewGrade.Columns)
+            {
+                e.Graphics.DrawString(column.HeaderText, font, Brushes.Black, startX, startY + offsetY);
+                startX += column.Width;
+            }
+            offsetY += (int)fontHeight + 5;
+            startX = 10;
+
+            // Print rows
+            foreach (DataGridViewRow row in dataGridViewGrade.Rows)
+            {
+                if (row.Index == dataGridViewGrade.NewRowIndex) continue; // Skip the new row template
+                startX = 10;
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    e.Graphics.DrawString(cell.Value?.ToString() ?? string.Empty, font, Brushes.Black, startX, startY + offsetY);
+                    startX += dataGridViewGrade.Columns[cell.ColumnIndex].Width;
+                }
+                offsetY += (int)fontHeight + 5;
+            }
+        }
+        #endregion
 
         #endregion
 
