@@ -1,4 +1,5 @@
 ﻿using ChartLibrary;
+using HelpButtonLibrary;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace UniversityEnrollmentApp.Forms
         private CandidateForm candidateForm;
         private GradeForm gradeForm;
         private DashboardForm dashboardForm;
+        private HelpButtonControl helpButtonControl;
 
         public MainForm()
         {
@@ -65,7 +67,7 @@ namespace UniversityEnrollmentApp.Forms
         {
             sidePanel.Height = btnCandidates.Height;
             sidePanel.Top = btnCandidates.Top;
-            if(candidateForm == null || candidateForm.IsDisposed)
+            if (candidateForm == null || candidateForm.IsDisposed)
             {
                 candidateForm = new CandidateForm();
                 candidateForm.MdiParent = this;
@@ -142,6 +144,43 @@ namespace UniversityEnrollmentApp.Forms
                 // Exit the application
                 Application.Exit();
             }
+        }
+
+        #endregion
+
+        #region UserControl Help
+
+        private void pbHelp_Click(object sender, EventArgs e)
+        {
+            helpButtonControl = new HelpButtonControl
+            {
+                Dock = DockStyle.Fill,
+                Width = 100,
+                Height = 100,
+                BorderStyle = BorderStyle.None
+            };
+            helpButtonControl.ExitClicked += HelpButtonControl_ExitClicked;
+            this.Controls.Add(helpButtonControl);
+            helpButtonControl.Show();
+            helpButtonControl.BringToFront();
+        }
+
+        private void HelpButtonControl_ExitClicked(object sender, EventArgs e)
+        {
+            helpButtonControl.Visible = false;
+            sidePanel.Height = btnFaculties.Height;
+            sidePanel.Top = btnFaculties.Top;
+            if (facultyForm == null || facultyForm.IsDisposed)
+            {
+                facultyForm = new FacultyForm();
+                facultyForm.MdiParent = this;
+                facultyForm.FormClosed += (s, args) => facultyForm = null; // Handle form closed event
+                facultyForm.Show();
+            }
+            facultyForm.TopLevel = false;
+            facultyForm.FormBorderStyle = FormBorderStyle.None;
+            facultyForm.Dock = DockStyle.Fill;
+            facultyForm.BringToFront();
         }
 
         #endregion

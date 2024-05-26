@@ -38,20 +38,23 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.pbShutdown = new System.Windows.Forms.PictureBox();
             this.btnGitHub = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnLinkedIn = new System.Windows.Forms.Button();
-            this.pbShutdown = new System.Windows.Forms.PictureBox();
+            this.pbHelp = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbShutdown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbHelp)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.pbHelp);
             this.panel1.Controls.Add(this.sidePanel);
             this.panel1.Controls.Add(this.btnDashboard);
             this.panel1.Controls.Add(this.btnCandidates);
@@ -173,6 +176,17 @@
             this.panel2.Size = new System.Drawing.Size(828, 39);
             this.panel2.TabIndex = 1;
             // 
+            // pbShutdown
+            // 
+            this.pbShutdown.Image = ((System.Drawing.Image)(resources.GetObject("pbShutdown.Image")));
+            this.pbShutdown.Location = new System.Drawing.Point(772, 0);
+            this.pbShutdown.Name = "pbShutdown";
+            this.pbShutdown.Size = new System.Drawing.Size(44, 39);
+            this.pbShutdown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbShutdown.TabIndex = 9;
+            this.pbShutdown.TabStop = false;
+            this.pbShutdown.Click += new System.EventHandler(this.pbShutdown_Click);
+            // 
             // btnGitHub
             // 
             this.btnGitHub.FlatAppearance.BorderSize = 0;
@@ -216,16 +230,16 @@
             this.btnLinkedIn.UseVisualStyleBackColor = true;
             this.btnLinkedIn.Click += new System.EventHandler(this.btnLinkedIn_Click);
             // 
-            // pbShutdown
+            // pbHelp
             // 
-            this.pbShutdown.Image = ((System.Drawing.Image)(resources.GetObject("pbShutdown.Image")));
-            this.pbShutdown.Location = new System.Drawing.Point(772, 0);
-            this.pbShutdown.Name = "pbShutdown";
-            this.pbShutdown.Size = new System.Drawing.Size(44, 39);
-            this.pbShutdown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbShutdown.TabIndex = 9;
-            this.pbShutdown.TabStop = false;
-            this.pbShutdown.Click += new System.EventHandler(this.pbShutdown_Click);
+            this.pbHelp.Image = ((System.Drawing.Image)(resources.GetObject("pbHelp.Image")));
+            this.pbHelp.Location = new System.Drawing.Point(12, 539);
+            this.pbHelp.Name = "pbHelp";
+            this.pbHelp.Size = new System.Drawing.Size(44, 39);
+            this.pbHelp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbHelp.TabIndex = 10;
+            this.pbHelp.TabStop = false;
+            this.pbHelp.Click += new System.EventHandler(this.pbHelp_Click);
             // 
             // MainForm
             // 
@@ -245,6 +259,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbShutdown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbHelp)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -264,5 +279,6 @@
         private System.Windows.Forms.Button btnGitHub;
         private System.Windows.Forms.Button btnLinkedIn;
         private System.Windows.Forms.PictureBox pbShutdown;
+        private System.Windows.Forms.PictureBox pbHelp;
     }
 }
