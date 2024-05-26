@@ -23,6 +23,9 @@ namespace UniversityEnrollmentApp.Forms
         private ErrorProvider errorProvider;
         private const string ConnectionString = "Data Source=database.db";
 
+        // Define event to bind dataGridView to donutChart
+        public event EventHandler DataChanged;
+
         public FacultyForm()
         {
             InitializeComponent();
@@ -71,6 +74,7 @@ namespace UniversityEnrollmentApp.Forms
 
                 RefreshDataGrid();
                 ClearInputControls();
+                OnDataChanged();        // raise the event
             }
         }
 
@@ -99,6 +103,7 @@ namespace UniversityEnrollmentApp.Forms
                         }
 
                         RefreshDataGrid();
+                        OnDataChanged();       // raise the event
                     }
                     else
                     {
@@ -132,6 +137,7 @@ namespace UniversityEnrollmentApp.Forms
                         DeleteFacultyDB(faculty);
                         RefreshDataGrid();
                         ClearInputControls();
+                        OnDataChanged();
                         MessageBox.Show("Faculty deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
@@ -174,7 +180,7 @@ namespace UniversityEnrollmentApp.Forms
         {
             LoadFacultiesDB();
             UpdateStatusLabel();
-            UpdateChart();
+            OnDataChanged();
         }
 
         private void RefreshDataGrid()
@@ -182,7 +188,6 @@ namespace UniversityEnrollmentApp.Forms
             dataGridViewFaculty.DataSource = null;
             dataGridViewFaculty.DataSource = DataSource.Faculties;
             UpdateStatusLabel();
-            UpdateChart();
         }
 
         private void ClearInputControls()
@@ -401,50 +406,14 @@ namespace UniversityEnrollmentApp.Forms
 
         #endregion
 
-        #region DonutChart
+        #region DataBinding DonutChart
 
-        private List<DonutChartValue> GenerateDonutChartData()
+        // Add a method to raise the DataChanged event
+        protected virtual void OnDataChanged()
         {
-            var chartData = new List<DonutChartValue>();
-            var faculties = DataSource.Faculties;
-
-            int totalFaculties = faculties.Count;
-            if (totalFaculties == 0) return chartData; // Avoid division by zero
-
-            foreach (var faculty in faculties)
-            {
-                var existingValue = chartData.FirstOrDefault(d => d.Label == faculty.FacultyName);
-                if (existingValue != null)
-                {
-                    existingValue.Value += 1; // Increment the count for this faculty
-                }
-                else
-                {
-                    chartData.Add(new DonutChartValue(faculty.FacultyName, 1));
-                }
-            }
-
-            // Calculate the percentage for each faculty
-            foreach (var data in chartData)
-            {
-                data.Value = (data.Value / totalFaculties) * 100;
-            }
-
-            return chartData;
+            DataChanged?.Invoke(this, EventArgs.Empty);
         }
-
-
-        // data binding to the DonutChartControl
-        private void UpdateChart()
-        {
-            if (this.Owner is DashboardForm dashboardForm)
-            {
-                var chartData = GenerateDonutChartData();
-                dashboardForm.donutChartControl1.Data = chartData.ToArray();
-                dashboardForm.donutChartControl1.Invalidate(); // Force the control to redraw with the new data
-            }
-        }
-
-        #endregion
     }
+
+    #endregion
 }

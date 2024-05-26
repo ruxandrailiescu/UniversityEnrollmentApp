@@ -52,7 +52,6 @@ namespace UniversityEnrollmentApp.Forms
             {
                 facultyForm = new FacultyForm();
                 facultyForm.MdiParent = this;
-                facultyForm.Owner = dashboardForm;
                 facultyForm.FormClosed += (s, args) => facultyForm = null; // Handle form closed event
                 facultyForm.Show();
             }

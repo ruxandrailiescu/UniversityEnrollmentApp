@@ -22,6 +22,9 @@ namespace UniversityEnrollmentApp.Forms
         private ErrorProvider errorProvider;
         private const string ConnectionString = "Data Source=database.db";
 
+        // Define event to notify data changes
+        public event EventHandler DataChanged;
+
         public CandidateForm()
         {
             InitializeComponent();
@@ -100,6 +103,7 @@ namespace UniversityEnrollmentApp.Forms
                         }
 
                         RefreshDataGrid();
+                        OnDataChanged();    // raise the event
                     }
                     else
                     {
@@ -144,6 +148,7 @@ namespace UniversityEnrollmentApp.Forms
                         }
 
                         RefreshDataGrid();
+                        OnDataChanged();    // raise the event
                     }
                     else
                     {
@@ -177,6 +182,7 @@ namespace UniversityEnrollmentApp.Forms
                         DeleteCandidateDB(candidate);
                         RefreshDataGrid();
                         ClearInputControls();
+                        OnDataChanged();    // raise the event
                         MessageBox.Show("Candidate deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
@@ -220,6 +226,7 @@ namespace UniversityEnrollmentApp.Forms
                 tbCandAddress.Text = DataSource.Candidates[rowIndex].CandidateAddress;
                 checkBoxAccepted.Checked = DataSource.Candidates[rowIndex].ApplicationStatus;
                 tbFacIdFK.Text = DataSource.Candidates[rowIndex].FacultyID.ToString();
+                OnDataChanged();
             }
         }
 
@@ -227,6 +234,7 @@ namespace UniversityEnrollmentApp.Forms
         {
             LoadCandidatesDB();
             UpdateStatusLabel();
+            OnDataChanged();
         }
 
         private void RefreshDataGrid()
@@ -514,6 +522,15 @@ namespace UniversityEnrollmentApp.Forms
                 // Remove from local copy
                 DataSource.Candidates.Remove(candidate);
             }
+        }
+
+        #endregion
+
+        #region DataBinding DonutChart
+
+        protected virtual void OnDataChanged()
+        {
+            DataChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
