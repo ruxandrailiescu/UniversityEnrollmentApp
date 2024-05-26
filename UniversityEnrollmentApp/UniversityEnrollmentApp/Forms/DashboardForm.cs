@@ -45,32 +45,6 @@ namespace UniversityEnrollmentApp.Forms
 
         private List<DonutChartValue> GenerateDonutChartData()
         {
-            //var chartData = new List<DonutChartValue>();
-            //var faculties = DataSource.Faculties;
-
-            //int totalFaculties = faculties.Count;
-            //if (totalFaculties == 0) return chartData; // Avoid division by zero
-
-            //foreach (var faculty in faculties)
-            //{
-            //    var existingValue = chartData.FirstOrDefault(d => d.Label == faculty.FacultyName);
-            //    if (existingValue != null)
-            //    {
-            //        existingValue.Value += 1; // Increment the count for this faculty
-            //    }
-            //    else
-            //    {
-            //        chartData.Add(new DonutChartValue(faculty.FacultyName, 1));
-            //    }
-            //}
-
-            //// Calculate the percentage for each faculty
-            //foreach (var data in chartData)
-            //{
-            //    data.Value = (float)Math.Round((data.Value / totalFaculties) * 100, 2);
-            //}
-
-            //return chartData;
             var chartData = new List<DonutChartValue>();
             var candidates = DataSource.Candidates;
 
